@@ -1,0 +1,224 @@
+<?xml version="1.0" ?>
+<robot name="edu" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find edu_description)/urdf/common_properties.xacro"/>
+  <xacro:include filename="$(find edu_description)/urdf/edu.gazebo.xacro"/>
+  <xacro:include filename="$(find edu_description)/urdf/macros.xacro" />
+
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <xacro:property name="chassisHeight" value="0.3"/>
+  <xacro:property name="chassisLength" value="0.3"/>
+  <xacro:property name="chassisWidth" value="0.3"/>
+  <xacro:property name="chassisMass" value="4.5"/>
+
+  <xacro:property name="wheelWidth" value="0.035"/>
+  <xacro:property name="wheelRadius" value="0.05"/>
+  <xacro:property name="wheelMass" value="0.25"/>
+  
+  <xacro:property name="casterRadius" value="${wheelRadius/2}"/>
+  <xacro:property name="casterMass" value="0.01"/>
+  <xacro:property name="casterPos" value="0.00175"/>
+
+  <link name="base_footprint"/>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
+
+  <!-- Remember to correct wheelDiameter and wheelSeperation in section controller in *.gazebo.xacro file.
+      To be cleared, wheelDiameter will be 2*wheelRadius, wheelSeperation will be chassisWidth -->
+  <!-- <link name="base_link">
+    <visual>
+      <origin xyz="0 0 ${wheelRadius}" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://edu_description/meshes/base_link.dae" scale= "1 1 1"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 ${wheelRadius}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${chassisLength} ${chassisWidth} ${chassisHeight}"/> 
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 ${wheelRadius}" rpy="0 0 0"/>
+      <mass value="${chassisMass}"/> 
+      <box_inertia m="${chassisMass}" x="${chassisLength}" y="${chassisWidth}" z="${chassisHeight}"/>
+    </inertial>
+  </link> -->
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <geometry>
+        <!-- <mesh filename="package://edu_description/meshes/base_link.dae" scale= "1 1 1"/> -->
+        <box size="0.3 0.3 0.3"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <geometry>
+        <box size="${chassisLength} ${chassisWidth} ${chassisHeight}"/> 
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <mass value="${chassisMass}"/> 
+      <box_inertia m="${chassisMass}" x="${chassisLength}" y="${chassisWidth}" z="${chassisHeight}"/>
+    </inertial>
+  </link>
+
+  <joint name="wheel_left_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_left_link"/>
+    <origin xyz="0 ${wheelWidth/2+chassisWidth/2} ${wheelRadius}" rpy="0 0 0" /> 
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="wheel_left_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+      <geometry>
+        <cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+      <geometry>
+        <cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+      <mass value="${wheelMass}"/>
+      <cylinder_inertia m="${wheelMass}" r="${wheelRadius}" h="${wheelWidth}"/>
+    </inertial>
+  </link>
+
+  <joint name="wheel_right_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_right_link"/>
+    <origin xyz="0 ${-wheelWidth/2-chassisWidth/2} ${wheelRadius}" rpy="0 0 0" /> 
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="wheel_right_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+      <geometry>
+        <cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+      <geometry>
+        <cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+      <mass value="${wheelMass}"/>
+      <cylinder_inertia m="${wheelMass}" r="${wheelRadius}" h="${wheelWidth}"/>
+    </inertial>
+  </link>
+
+  <joint name="caster_back_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_back_link"/>
+  </joint>
+
+  <link name="caster_back_link">
+    <visual>
+      <origin xyz="${casterRadius-chassisLength/2+0.02} 0 ${casterRadius+casterPos}" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${casterRadius}"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+
+    <collision>
+      <origin xyz="${casterRadius-chassisLength/2+0.02} 0 ${casterRadius+casterPos}" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${casterRadius}"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="${casterRadius-chassisLength/2+0.02} 0 ${casterRadius+casterPos}" rpy="0 0 0"/>
+      <mass value="${casterMass}"/>
+      <sphere_inertia m="${casterMass}" r="${casterRadius}"/>
+    </inertial>
+  </link>
+
+  <joint name="caster_front_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_front_link"/>
+  </joint>
+
+  <link name="caster_front_link">
+    <visual>
+      <origin xyz="${-(casterRadius-chassisLength/2+0.02)} 0 ${casterRadius+casterPos}" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${casterRadius}"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+
+    <collision>
+      <origin xyz="${-(casterRadius-chassisLength/2+0.02)} 0 ${casterRadius+casterPos}" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${casterRadius}"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="${-(casterRadius-chassisLength/2+0.02)} 0 ${casterRadius+casterPos}" rpy="0 0 0"/>
+      <mass value="${casterMass}"/>
+      <sphere_inertia m="${casterMass}" r="${casterRadius}"/>
+    </inertial>
+  </link>
+
+  <joint name="camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera"/>
+    <origin xyz="-0.135 0 1.3875" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.025 0.025"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <joint name="scan_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_scan"/>
+    <origin xyz="0 0 ${chassisHeight + 0.06}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="base_scan">
+    <visual>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://edu_description/meshes/sensors/lds.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+  </link>
+
+</robot>

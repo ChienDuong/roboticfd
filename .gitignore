@@ -1,0 +1,3 @@
+education_robot_ws/build/*
+education_robot_ws/devel/*
+education_robot_ws/.catkin_workspace
