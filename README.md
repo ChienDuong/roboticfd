@@ -89,6 +89,7 @@ roslaunch edu_gazebo edu_empty_world.launch
 ```
 
 Results:
+
 ![results](wiki/images/1_manual_control_rs.gif)
 
 
