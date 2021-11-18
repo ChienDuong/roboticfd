@@ -14,13 +14,13 @@
 # Table of Content
 
 0. [x] Config
-1. [x] Manually control robot in simulation
+1. [x] Manually control a robot in simulation
 2. [x] Autonomously in Simulation: build map, run map
-3. [ ] Create custom message. And use_case example.
-4. [ ] Tips & trick: ros param, ros launch, ros loginfo, switch topic tmux, roslog, ros bag, public topic one time.
-5. [ ] Build an Hardware
+3. [ ] Create custom messages. And use_case example.
+4. [ ] List of tips & tricks: ros param, ros launch, debug with roslog, switch topic, roslog, ros bag, public topic one time.
+5. [ ] Build a Hardware
 6. [ ] Robotic in Production
-7. [ ] Vision base approach with AI solution: reinforcements learning, segmentation, detection.
+7. [ ] Vision based approach with AI solution: reinforcements learning, segmentation, detection.
 8. [ ] Sensors fusion and fusion vision approach with sensor_base approach.
 ## Config 
 Install Ros, gazebo, rviz.
@@ -64,7 +64,7 @@ sudo apt-get install ros-melodic-amcl
 ```
 
 Note: 
- - If you dont want to install to the system `/opt/ros`, you can download the package from any resources (example github) -> put in the `src` folder -> catkin_make to use this package
+ - If you don't want to install to the system `/opt/ros`, you can download the package from any resources (example GitHub) -> put it in the `src` folder -> catkin_make to use this package
 
 -  If you are using ubuntu 16.04 -> change `melodic` to `kinetic`
 
@@ -78,7 +78,7 @@ catkin_make
 
 
 
-To manual control robot we only need to use 3 packages
+To manual control robot, we only need to use 3 packages
 
  ![tree](wiki/images/manual_control_robot_simulation.png)
 
@@ -106,7 +106,7 @@ Results:
 
 ## 2. Autonomously control robot in simulation
 Autonomous in Simulation: build map, run map
-- To build map we need 3 more packages: `maps, third_party_package/gmapping, and edu_buildmap`
+- To build maps we need 3 more packages: `maps, third_party_package/gmapping, and edu_buildmap`
 
 
  ![tree](wiki/images/buildmap_simulation.png)
@@ -166,4 +166,4 @@ Results:
 Awesome Resources: 
 
 - https://github.com/ROBOTIS-GIT/turtlebot3_simulations
-- http://wiki.ros.org/navigation
+- https://github.com/kiloreux/awesome-robotics
