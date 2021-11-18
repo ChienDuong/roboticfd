@@ -1,0 +1,15 @@
+<launch>
+    <!-- Loading world file -->
+    <include file="$(find edu_gazebo)/launch/edu_empty_world.launch"/>
+    <!-- Start gmapping -->
+    <include file="$(find gmapping)/launch/slam_gmapping_pr2.launch"/>
+    <!-- Start manual control . This should be run independent-->
+    <!-- <include file="$(find genz_teleop)/launch/genz_teleop_key.launch"/> -->
+
+    <!-- Switch topic manual_cmd_vel to cmd_vel. 
+    <node name="tmux_tool_select" pkg="genz_teleop" type="switch_manual_tele.py"/> -->
+
+    <!-- Rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find maps)/rviz.config.rviz"/>
+</launch>
+
