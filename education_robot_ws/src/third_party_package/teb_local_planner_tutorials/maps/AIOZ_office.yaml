@@ -1,0 +1,7 @@
+image: AIOZ_office_fixed_2.png
+resolution: 0.05
+origin: [-21.200000, -10.000000, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+

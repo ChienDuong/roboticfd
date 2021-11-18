@@ -1,0 +1,32 @@
+
+#---standard pioneer footprint---
+#---(in meters)---
+
+# footprint: [[-0.2, -0.2], [-0.2, 0.2], [0.2, 0.2], [0.2, -0.2]]
+robot_radius: 0.22
+transform_tolerance: 0.1
+map_type: costmap
+
+always_send_full_costmap: true
+
+#Obstacle marking parameters
+obstacle_layer:
+ enabled: true
+ obstacle_range: 3.0 # only updaet the object 3.0 meter from the base
+ raytrace_range: 4.0
+ inflation_radius: 0.2 #  For example, setting the inflation radius at 0.55 meters means that the robot will treat all paths that stay 0.55 meters or more away from obstacles as having equal obstacle cost
+ track_unknown_space: true
+ combination_method: 1
+
+ observation_sources: laser_scan_sensor
+ laser_scan_sensor: {data_type: LaserScan, topic: scan, marking: true, clearing: true}
+
+#Cost function parameters
+inflation_layer:
+  enabled:              true
+  cost_scaling_factor:  10.0  # exponential rate at which the obstacle cost drops off (default: 10)
+  inflation_radius:     0.4  # max. distance from an obstacle (the purple area). Config global path ne vat
+
+static_layer:
+  enabled:              true
+  map_topic:            "/map"

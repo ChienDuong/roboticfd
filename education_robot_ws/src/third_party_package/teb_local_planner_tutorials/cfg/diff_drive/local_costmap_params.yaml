@@ -1,0 +1,15 @@
+local_costmap:
+  global_frame: map
+  robot_base_frame: base_link
+  update_frequency: 5.0
+  publish_frequency: 2.0
+  static_map: false
+  rolling_window: true
+  width: 3.0 # anh huong toi computational time (vung quan sat local)
+  height: 3.5 # anh huong toi computational time
+  resolution: 0.15  # anh huong toi computational time (do chia nho nhat tren map)
+  transform_tolerance: 0.3
+  
+  plugins:
+   - {name: static_layer,        type: "costmap_2d::StaticLayer"}
+   - {name: obstacle_layer,      type: "costmap_2d::ObstacleLayer"}

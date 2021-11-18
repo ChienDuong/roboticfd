@@ -1,4 +1,4 @@
-image: ./src/maps/empty_world.pgm
+image: empty_world.pgm
 resolution: 0.050000
 origin: [-11.200000, -12.800000, 0.000000]
 negate: 0

@@ -1,28 +1,30 @@
 # Roboticfd
 
-`Robotic fundamental tutorials.`
+`Educational Robotic fundamental tutorials.`
 # Title
 
-| **Author(s)** | Chien Dunog |
+| **Author(s)** | Chien Duong |
 | :------------ | :-------------------------------------------------------------------------------------------- |
-| **Topic(s)** | Robotic / Ros / AI |
+| **Topic(s)** | Educational Robotic / Ros / AI |
 | **Status**       | **In progress** |
 # Pre-requirement:
 1. Ubuntu 16.04 or 18.04
-3. Ros
-
+2. Ros
+3. Theory: https://chienduong93.wordpress.com/2021/11/18/rf-tutorial-1/
 # Table of Content
 
-
-
-0. [x] Config pre-requirements
-1. [x] Manual control robot in simulation
-2. [ ] Autonomous in Simulation: build map, run map
+0. [x] Config
+1. [x] Manually control robot in simulation
+2. [x] Autonomously in Simulation: build map, run map
 3. [ ] Create custom message. And use_case example.
-4. [ ] Tips & trick: ros param, ros launch, switch topic tmux, roslog, ros bag, public topic one time.
+4. [ ] Tips & trick: ros param, ros launch, ros loginfo, switch topic tmux, roslog, ros bag, public topic one time.
 5. [ ] Build an Hardware
-## Config pre-requirement 
-Install Ros, gazebo, rviz 
+6. [ ] Robotic in Production
+7. [ ] Vision base approach with AI solution: reinforcements learning, segmentation, detection.
+8. [ ] Sensors fusion and fusion vision approach with sensor_base approach.
+## Config 
+Install Ros, gazebo, rviz.
+
 ROS: 18.04: melodic, 16.04: kinetic
 
 Check ubuntu version
@@ -38,7 +40,7 @@ sudo apt-get update
 sudo apt-get install ros-melodic-desktop-full
 ```
 
-Basic package: should be install together to system. 
+Basic packages: should be install into the system `/opt/ros/melodic`.
 
 ```BASH
 sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
@@ -47,22 +49,24 @@ sudo rosdep init
 rosdep update
 
 sudo apt-get install ros-melodic-gazebo-ros-pkgs ros-melodic-gazebo-ros-control
-
 sudo apt-get install ros-melodic-unique-id
-
 sudo apt-get install ros-melodic-uuid-msgs
-
-sudo apt-get install ros-melodic-navigation
 ```
 
-Note: If you dont want to install to the system `/opt/ros`, you can download the package from resource (example github) -> put in src folder -> catkin_make again
+Extra packages for autonomous function.
 
-Example: slam-gmapping package I dont want to install to the system by using apt install. Then I put it in `education_robot_ws/src` folder gmapping. I can use this package after catkin_make the workspace again
+```
+sudo apt-get install ros-melodic-navigation
+sudo apt-get install ros-melodic-map-server
+sudo apt-get install ros-melodic-move-base
+rospack profile
+sudo apt-get install ros-melodic-amcl
+```
 
-If you want to install to the system
+Note: 
+ - If you dont want to install to the system `/opt/ros`, you can download the package from any resources (example github) -> put in the `src` folder -> catkin_make to use this package
 
-` sudo apt-get install ros-kinetic-slam-gmapping`
-
+-  If you are using ubuntu 16.04 -> change `melodic` to `kinetic`
 
 Setup Ros environment
 
@@ -70,11 +74,15 @@ Setup Ros environment
 cd ~/education_robot_ws/
 catkin_make
 ```
-## Manual control robot in simulation
+## 1. Manually control robot in simulation
 
-- Keyboard control
-you only need 3 packages
+
+
+To manual control robot we only need to use 3 packages
+
  ![tree](wiki/images/manual_control_robot_simulation.png)
+
+ - Keyboard control
 ```BASH
 cd  education_robot_ws
 source devel/setup.bash
@@ -85,6 +93,7 @@ roslaunch edu_teleop edu_teleop_key.launch
 ```BASH
 cd  education_robot_ws
 source devel/setup.bash
+export TURTLEBOT3_MODEL="burger"
 roslaunch edu_gazebo edu_empty_world.launch
 ```
 
@@ -93,6 +102,68 @@ Results:
 ![results](wiki/images/1_manual_control_rs.gif)
 
 
-Good References: 
+
+
+## 2. Autonomously control robot in simulation
+Autonomous in Simulation: build map, run map
+- To build map we need 3 more packages: `maps, third_party_package/gmapping, and edu_buildmap`
+
+
+ ![tree](wiki/images/buildmap_simulation.png)
+
+1. Build map
+
+- Add on third_party_package/gmapping, edu_buildmap, and maps. Then build the package with catkin_make
+
+```
+cd education_robot_ws
+catkin_make
+```
+
+- Run system
+
+In each termianl, always remember to active workspace.
+
+```
+cd  education_robot_ws
+source devel/setup.bash
+```
+
+Terminal 1: manual control robot
+```
+roslaunch edu_teleop edu_teleop_key.launch 
+```
+
+Terminal 2: observe map and robot 
+```
+roslaunch edu_buildmap build_map_simulation.launch
+```
+
+Terminal 3: save map after finished.
+```
+cd  education_robot_ws
+rosrun map_server map_saver -f ./src/maps/empty_world
+```
+
+Results:
+
+![results](wiki/images/2_buildmap1.gif)
+
+2. Autonomous naviagation
+
+- Add on third_party_package/teb_local_planner_tutorials. Then build the package with cakin_make
+
+- Others Pre-requirements: amcl and move_base package
+
+```
+roslaunch edu_autonomous autonomous_simulation.launch
+```
+
+Results:
+
+![results](wiki/images/3_autonomous.gif)
+
+Awesome Resources: 
 
 - https://github.com/ROBOTIS-GIT/turtlebot3_simulations
+- http://wiki.ros.org/navigation
