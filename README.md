@@ -163,6 +163,19 @@ Results:
 
 ![results](wiki/images/3_autonomous.gif)
 
+## 4. List of tips and trick
+
+- Using python to call and terminate rosrun and
+
+Run subprocess to transform coordinate between `map` and `uwb` sensor.
+
+```
+cd roboticfd/utils
+python run_subprocess.py
+```
+Result: 
+
+![results](wiki/images/subprocess.png)
 Awesome Resources: 
 
 - https://github.com/ROBOTIS-GIT/turtlebot3_simulations
